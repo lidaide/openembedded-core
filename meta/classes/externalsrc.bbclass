@@ -77,6 +77,8 @@ python () {
         # Dummy value because the default function can't be called with blank SRC_URI
         d.setVar('SRCPV', '999')
 
+        d.setVar("SOURCE_CLEANDIRS", "")
+
         if d.getVar('CONFIGUREOPT_DEPTRACK') == '--disable-dependency-tracking':
             d.setVar('CONFIGUREOPT_DEPTRACK', '')
 
@@ -90,7 +92,7 @@ python () {
                 # Since configure will likely touch ${S}, ensure only we lock so one task has access at a time
                 d.appendVarFlag(task, "lockfiles", " ${S}/singletask.lock")
 
-            for funcname in [task, "base_" + task, "kernel_" + task]:
+            for funcname in [task]:
                 # We do not want our source to be wiped out, ever (kernel.bbclass does this for do_clean)
                 cleandirs = oe.recipeutils.split_var_value(d.getVarFlag(funcname, 'cleandirs', False) or '')
                 setvalue = False

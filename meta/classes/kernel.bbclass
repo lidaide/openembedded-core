@@ -172,8 +172,9 @@ inherit ${KERNEL_CLASSES}
 # We need to move these over to STAGING_KERNEL_DIR. We can't just
 # create the symlink in advance as the git fetcher can't cope with
 # the symlink.
-do_unpack[cleandirs] += " ${S} ${STAGING_KERNEL_DIR} ${B} ${STAGING_KERNEL_BUILDDIR}"
-do_clean[cleandirs] += " ${S} ${STAGING_KERNEL_DIR} ${B} ${STAGING_KERNEL_BUILDDIR}"
+SOURCE_CLEANDIRS += "${STAGING_KERNEL_DIR}"
+do_unpack[cleandirs] += "${B} ${STAGING_KERNEL_BUILDDIR}"
+do_clean[cleandirs] += " ${SOURCE_CLEANDIRS} ${B} ${STAGING_KERNEL_BUILDDIR}"
 python do_symlink_kernsrc () {
     s = d.getVar("S")
     if s[-1] == '/':

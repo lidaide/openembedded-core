@@ -165,7 +165,8 @@ python base_do_fetch() {
 addtask unpack after do_fetch
 do_unpack[dirs] = "${WORKDIR}"
 
-do_unpack[cleandirs] = "${@d.getVar('S') if os.path.normpath(d.getVar('S')) != os.path.normpath(d.getVar('WORKDIR')) else os.path.join('${S}', 'patches')}"
+SOURCE_CLEANDIRS = "${@d.getVar('S') if os.path.normpath(d.getVar('S')) != os.path.normpath(d.getVar('WORKDIR')) else os.path.join('${S}', 'patches')}"
+do_unpack[cleandirs] = "${SOURCE_CLEANDIRS}"
 
 python base_do_unpack() {
     src_uri = (d.getVar('SRC_URI') or "").split()
